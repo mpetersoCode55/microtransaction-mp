@@ -148,7 +148,7 @@ export default {
     }
 
     try {
-      const data = await req.steam.steamMicrotransactionFinalizeTransaction(appId, String(global.orderId));
+      const data = await req.steam.steamMicrotransactionFinalizeTransaction(appId, String(orderId));
 
       res.status(200).json({
         success: data.response.result === 'OK',
