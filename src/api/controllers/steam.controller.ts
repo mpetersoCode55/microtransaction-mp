@@ -14,7 +14,7 @@ interface CustomError extends Error {
   };
 }
 
-var curentOrder = 5101
+var curentOrder = 5200
 
 const validateError = (res: Response, err: CustomError): void => {
   const status = err?.response?.status ?? 400;
@@ -95,7 +95,8 @@ export default {
     }
 
     try {
-      const orderId = String(curentOrder++)
+      curentOrder += 1
+      const orderId = String(curentOrder)
       const data = await req.steam.steamMicrotransactionInitWithOneItem({
         appId,
         category,
@@ -148,7 +149,7 @@ export default {
     }
 
     try {
-      const data = await req.steam.steamMicrotransactionFinalizeTransaction(appId, orderId);
+      const data = await req.steam.steamMicrotransactionFinalizeTransaction(appId, String(curentOrder));
 
       res.status(200).json({
         success: data.response.result === 'OK',
