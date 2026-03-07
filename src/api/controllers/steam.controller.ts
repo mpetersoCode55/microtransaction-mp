@@ -92,30 +92,33 @@ export default {
       res.status(400).json({ error: 'ItemId not found in the game database' });
       return;
     }
+    var success = false
+    while(!success) {
+      try {
+        global.orderId += 1
+        const orderId = String(global.orderId)
+        const data = await req.steam.steamMicrotransactionInitWithOneItem({
+          appId,
+          category,
+          amount: product.price,
+          itemDescription,
+          itemId,
+          orderId,
+          steamId,
+        });
 
-    try {
-      global.orderId += 1
-      const orderId = String(global.orderId)
-      const data = await req.steam.steamMicrotransactionInitWithOneItem({
-        appId,
-        category,
-        amount: product.price,
-        itemDescription,
-        itemId,
-        orderId,
-        steamId,
-      });
+        const success = data.response.result === 'OK' && data.response.params.transid;
 
-      const success = data.response.result === 'OK' && data.response.params.transid;
-
-      if (!success) {
-        throw new Error(data.response?.error?.errordesc ?? 'Steam API returned unknown error');
+        // if (!success) {
+        //   throw new Error(data.response?.error?.errordesc ?? 'Steam API returned unknown error');
+        // }
+        if(success) {
+          res.status(200).json({ transid: data.response.params.transid });
+        }
+      } catch (err) {
+        validateError(res, err as CustomError);
       }
-
-      res.status(200).json({ transid: data.response.params.transid });
-    } catch (err) {
-      validateError(res, err as CustomError);
-    }
+  }
   },
 
   checkPurchaseStatus: async (req: Request, res: Response): Promise<void> => {
