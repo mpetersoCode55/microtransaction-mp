@@ -95,15 +95,17 @@ export default {
     var success = false
     while(!success) {
       try {
-        global.orderId += 1
-        const orderId = String(global.orderId)
+        const orderIdStr = steamId + itemId
+        const orderId = Number(orderIdStr)
+        // global.orderId += 1
+        // const orderId = String(global.orderId)
         const data = await req.steam.steamMicrotransactionInitWithOneItem({
           appId,
           category,
           amount: product.price,
           itemDescription,
           itemId,
-          orderId,
+          orderId: orderIdStr,
           steamId,
         });
 
