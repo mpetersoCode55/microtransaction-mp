@@ -93,7 +93,7 @@ export default {
       return;
     }
     var success = false
-    while(!success) {
+    // while(!success) {
       try {
         // const orderIdStr = steamId + itemId
         const orderId = (Date.now() + Math.random())
@@ -121,7 +121,7 @@ export default {
       } catch (err) {
         validateError(res, err as CustomError);
       }
-  }
+  // }
   },
 
   checkPurchaseStatus: async (req: Request, res: Response): Promise<void> => {
