@@ -27,5 +27,5 @@ export default {
    * Set true if you want to enable sandbox mode
    * Please check https://partner.steamgames.com/doc/webapi/ISteamMicroTxnSandbox for more info
    */
-  development: true,
+  development: false,
 };
