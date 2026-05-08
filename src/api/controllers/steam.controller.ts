@@ -92,7 +92,7 @@ export default {
       res.status(400).json({ error: 'ItemId not found in the game database' });
       return;
     }
-    var success = false
+    // var success = false
     // while(!success) {
       try {
         // const orderIdStr = steamId + itemId
